@@ -270,11 +270,6 @@ sudo vim /opt/CMAK/conf/application.conf
     kafka-manager.zkhosts="192.168.1.25:2181,192.168.1.26:2181,192.168.1.27:2181"
     cmak.zkhosts="192.168.1.25:2181,192.168.1.26:2181,192.168.1.27:2181"
 
-```
-
-Topic create and delete
-``` bash
-# go to /opt/CMAK
 ./sbt clean dist
 
 cd /opt/CMAK/target/universal
@@ -283,6 +278,21 @@ sudo unzip cmak-3.0.0.7.zip
 cd cmak-3.0.0.7/
 
 sudo bin/cmak -Dconfig.file=/root/CMAK/conf/application.conf -Dhttp.port=9000
+
+```
+
+Topic create and delete
+``` bash
+# create: cd /opt/kafka_2.13-3.4.1/bin
+./kafka-topics.sh --create --topic test-topic --bootstrap-server localhost:9092 --replication-factor 1 --partitions 4
+./kafka-topics.sh --create --topic test-topic-1 --bootstrap-server 192.168.1.25:9092 --replication-factor 1 --partitions 4
+
+# describe
+./kafka-topics.sh --describe --topic test-topic  zookeeper localhost:2181
+./kafka-topics.sh --describe --topic test-topic-1 --bootstrap-server 192.168.1.25:9092 zookeeper 192.168.1.25:2181
+
+
+
 
 
 ```
