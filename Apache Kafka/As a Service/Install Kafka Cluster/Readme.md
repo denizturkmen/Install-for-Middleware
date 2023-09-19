@@ -181,7 +181,7 @@ advertised.host.name=kafka-node-1
 advertised.listeners=PLAINTEXT://kafka-node-1:9092
 zookeeper.connect=192.168.1.25:2181,192.168.1.26:2181,192.168.1.27:2181
 default.replication.factor=3
-#delete.topic.enable = true
+delete.topic.enable = true
 
 # Configuration: server1: kafka-node-2
 sudo vim kafka_2.13-3.4.1/config/server.properties
@@ -191,7 +191,7 @@ advertised.host.name=kafka-node-2
 advertised.listeners=PLAINTEXT://kafka-node-2:9092
 zookeeper.connect=192.168.1.25:2181,192.168.1.26:2181,192.168.1.27:2181
 default.replication.factor=3
-#delete.topic.enable = true
+delete.topic.enable = true
 
 # Configuration: server1: kafka-node-3
 sudo vim kafka_2.13-3.4.1/config/server.properties
@@ -201,7 +201,7 @@ advertised.host.name=kafka-node-3
 advertised.listeners=PLAINTEXT://kafka-node-3:9092
 zookeeper.connect=192.168.1.25:2181,192.168.1.26:2181,192.168.1.27:2181
 default.replication.factor=3
-#delete.topic.enable = true
+delete.topic.enable = true
 
 
 # started manuel service 
