@@ -116,7 +116,7 @@ sudo echo '3' >> /var/zookeeper/myid
 sudo /opt/apache-zookeeper-3.7.1-bin/bin/zkServer.sh start /opt/apache-zookeeper-3.7.1-bin/conf/zoo.cfg
 
 # stopped manuel service 
-sudo /opt/apache-zookeeper-3.7.1-bin/bin/zkServer.sh start /opt/apache-zookeeper-3.7.1-bin/conf/zoo.cfg
+sudo /opt/apache-zookeeper-3.7.1-bin/bin/zkServer.sh stop /opt/apache-zookeeper-3.7.1-bin/conf/zoo.cfg
 
 # owner zookeeper user allow to related directory
 sudo chown -R zookeeper:zookeeper /opt/apache-zookeeper-3.7.1-bin/
