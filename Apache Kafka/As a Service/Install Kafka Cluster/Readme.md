@@ -270,7 +270,7 @@ sudo vim /opt/CMAK/conf/application.conf
     kafka-manager.zkhosts="192.168.1.25:2181,192.168.1.26:2181,192.168.1.27:2181"
     cmak.zkhosts="192.168.1.25:2181,192.168.1.26:2181,192.168.1.27:2181"
 
-# clean
+# build
 ./sbt clean dist
 
 # unzip
