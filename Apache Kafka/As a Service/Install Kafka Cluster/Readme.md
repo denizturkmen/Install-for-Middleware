@@ -208,7 +208,7 @@ delete.topic.enable = true
 sudo /opt/kafka_2.13-3.4.1/bin/kafka-server-start.sh /opt/kafka_2.13-3.4.1/config/server.properties
 
 # stopped manuel service 
-sudo /opt/kafka_2.13-3.4.1/bin/kafka-server-stop.sh /opt/kafka_2.13-3.4.1/config/server.properties
+sudo /opt/kafka_2.13-3.4.1/bin/kafka-server-stopp.sh /opt/kafka_2.13-3.4.1/config/server.properties
 
 # owner kafka user allow to related directory
 sudo chown -R kafka:kafka /tmp/kafka-logs/
