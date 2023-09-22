@@ -270,12 +270,17 @@ sudo vim /opt/CMAK/conf/application.conf
     kafka-manager.zkhosts="192.168.1.25:2181,192.168.1.26:2181,192.168.1.27:2181"
     cmak.zkhosts="192.168.1.25:2181,192.168.1.26:2181,192.168.1.27:2181"
 
+# clean
 ./sbt clean dist
 
+# unzip
 cd /opt/CMAK/target/universal
 sudo unzip cmak-3.0.0.7.zip
 
+# config
 cd cmak-3.0.0.7/
+cd conf
+sudo vim application.conf
 
 sudo bin/cmak -Dconfig.file=/root/CMAK/conf/application.conf -Dhttp.port=9000
 
