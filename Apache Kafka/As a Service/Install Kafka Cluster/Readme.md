@@ -217,7 +217,7 @@ sudo chown -R kafka:kafka /opt/kafka_2.13-3.4.1/
 ```
 
 Kafka service needs to create on systemd on all nodes. For this
-**sudo vim /lib/systemd/system/kafak.service**
+**sudo vim /lib/systemd/system/kafka.service**
 ``` bash
 
 [Unit]
