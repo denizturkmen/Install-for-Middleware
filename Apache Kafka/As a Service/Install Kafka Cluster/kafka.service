@@ -1,0 +1,19 @@
+[Unit]
+Description=Kafka Daemon
+Documentation=https://kafka.apache.org
+Requires=zookeeper.service
+After=zookeeper.service
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/kafka_2.13-3.4.1
+User=kafka
+Group=kafka
+Environment="JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64"
+ExecStart=/opt/kafka_2.13-3.4.1/bin/kafka-server-start.sh /opt/kafka_2.13-3.4.1/config/server.properties
+ExecStop=/opt/kafka_2.13-3.4.1/bin/kafka-server-stop.sh /opt/kafka_2.13-3.4.1/config/server.properties
+TimeoutSec=30
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
