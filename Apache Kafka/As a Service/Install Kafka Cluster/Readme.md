@@ -7,17 +7,17 @@ What's the **Zookeeper?**
 
 Set hostname on each node like below
 ``` bash
- 192.168.1 25 -> sudo hostnamectl set-hostname kafka-node-1
- 192.168.1 26 -> sudo hostnamectl set-hostname kafka-node-2
- 192.168.1 27 -> sudo hostnamectl set-hostname kafka-node-3
+ 192.168.1 40 -> sudo hostnamectl set-hostname kafkanode1
+ 192.168.1 41 -> sudo hostnamectl set-hostname kafkanode2
+ 192.168.1 42 -> sudo hostnamectl set-hostname kafkanode3
 
 ```
 
 Installation Overview
 ``` bash
-Server_1        192.168.1.25        java11 + zookeeper + kafka 
-Server_2        192.168.1.26        java11 + zookeeper + kafka
-Server_3        192.168.1.27        java11 + zookeeper + kafka
+Server_1        192.168.1.40        java11 + zookeeper + kafka 
+Server_2        192.168.1.41        java11 + zookeeper + kafka
+Server_3        192.168.1.42        java11 + zookeeper + kafka
 
 ```
 
@@ -25,9 +25,9 @@ Add your nodes info in **/etc/hosts** file like below
 ``` bash
 sudo vim /etc/hosts
 
- 192.168.1 25       kafka-node-1
- 192.168.1 26       kafka-node-2
- 192.168.1 27       kafka-node-3
+ 192.168.1.40       kafkanode1
+ 192.168.1.41       kafkanode2
+ 192.168.1.42       kafkanode3
 
 ```
 
@@ -76,38 +76,38 @@ sudo vim apache-zookeeper-3.7.1-bin/conf/zoo.cfg
 # server_1
     dataDir=/var/zookeeper
     clientPort=2181
-    server.1=192.168.1.25:2888:3888
-    server.2=192.168.1.26:2888:3888
-    server.3=192.168.1.27:2888:3888
+    server.1=192.168.1.40:2888:3888
+    server.2=192.168.1.41:2888:3888
+    server.3=192.168.1.42:2888:3888
 
 # server_2
     dataDir=/var/zookeeper
     clientPort=2181
-    server.1=192.168.1.25:2888:3888
-    server.2=192.168.1.26:2888:3888
-    server.3=192.168.1.27:2888:3888
+    server.1=192.168.1.40:2888:3888
+    server.2=192.168.1.41:2888:3888
+    server.3=192.168.1.42:2888:3888
 
 # server_3
     dataDir=/var/zookeeper
     clientPort=2181
-    server.1=192.168.1.25:2888:3888
-    server.2=192.168.1.26:2888:3888
-    server.3=192.168.1.27:2888:3888
+    server.1=192.168.1.40:2888:3888
+    server.2=192.168.1.41:2888:3888
+    server.3=192.168.1.42:2888:3888
 
 # configuration: create directory equal dataDir. For all nodes
 sudo mkdir /var/zookeeper/
 
-# kafka-node-1
+# kafkanode1
 sudo mkdir /var/zookeeper/
 sudo su
 sudo echo '1' >> /var/zookeeper/myid
 
-# kafka-node-2
+# kafkanode2
 sudo mkdir /var/zookeeper/
 sudo su
 sudo echo '2' >> /var/zookeeper/myid
 
-# kafka-node-3
+# kafkanode3
 sudo mkdir /var/zookeeper/
 sudo su
 sudo echo '3' >> /var/zookeeper/myid
@@ -173,33 +173,33 @@ sudo tar xzf kafka_2.13-3.4.1.tgz
 sudo rm kafka_2.13-3.4.1.tgz 
 
 
-# Configuration: server1: kafka-node-1
+# Configuration: server1: kafkanode1
 sudo vim kafka_2.13-3.4.1/config/server.properties
 
 broker.id=1
-advertised.host.name=kafka-node-1
-advertised.listeners=PLAINTEXT://kafka-node-1:9092
-zookeeper.connect=192.168.1.25:2181,192.168.1.26:2181,192.168.1.27:2181
+advertised.host.name=kafkanode1
+advertised.listeners=PLAINTEXT://kafkanode1:9092
+zookeeper.connect=192.168.1.40:2181,192.168.1.41:2181,192.168.1.42:2181
 default.replication.factor=3
 delete.topic.enable = true
 
-# Configuration: server1: kafka-node-2
+# Configuration: server1: kafkanode2
 sudo vim kafka_2.13-3.4.1/config/server.properties
 
 broker.id=2
-advertised.host.name=kafka-node-2
-advertised.listeners=PLAINTEXT://kafka-node-2:9092
-zookeeper.connect=192.168.1.25:2181,192.168.1.26:2181,192.168.1.27:2181
+advertised.host.name=kafkanode2
+advertised.listeners=PLAINTEXT://kafkanode2:9092
+zookeeper.connect=192.168.1.40:2181,192.168.1.41:2181,192.168.1.42:2181
 default.replication.factor=3
 delete.topic.enable = true
 
-# Configuration: server1: kafka-node-3
+# Configuration: server1: kafkanode3
 sudo vim kafka_2.13-3.4.1/config/server.properties
 
 broker.id=3
-advertised.host.name=kafka-node-3
-advertised.listeners=PLAINTEXT://kafka-node-3:9092
-zookeeper.connect=192.168.1.25:2181,192.168.1.26:2181,192.168.1.27:2181
+advertised.host.name=kafkanode3
+advertised.listeners=PLAINTEXT://kafkanode3:9092
+zookeeper.connect=192.168.1.40:2181,192.168.1.41:2181,192.168.1.42:2181
 default.replication.factor=3
 delete.topic.enable = true
 
@@ -254,6 +254,23 @@ sudo systemctl status kafka.service
 
 ```
 
+Testing to kafka cluster
+``` bash
+# go to kafka directory
+cd /opt/kafka_version
+
+# producer
+./bin/kafka-console-producer.sh --topic test-1 --bootstrap-server kafkanode1:9092,kafkanode2:9092,kafkanode3:9092
+
+# consumer
+./bin/kafka-console-consumer.sh --topic test-1 --bootstrap-server kafkanode1:9092,kafkanode2:9092,kafkanode3:9092 --from-beginning
+
+# desribe
+./bin/kafka-topics.sh --describe --bootstrap-server kafkanode1:9092,kafkanode2:9092,kafkannode3:9092 --topic test-1 
+
+```
+
+
 **CMAK:** Visualizer install and configuration. It is enough to install a **single node**
 ``` bash
 # go to dowland directory
@@ -267,21 +284,22 @@ cd CMAK/
 
 # config
 sudo vim /opt/CMAK/conf/application.conf
-    kafka-manager.zkhosts="192.168.1.25:2181,192.168.1.26:2181,192.168.1.27:2181"
-    cmak.zkhosts="192.168.1.25:2181,192.168.1.26:2181,192.168.1.27:2181"
+    kafka-manager.zkhosts="192.168.1.40:2181,192.168.1.41:2181,192.168.1.42:2181"
+    cmak.zkhosts="192.168.1.40:2181,192.168.1.41:2181,192.168.1.42:2181"
 
 # build
 ./sbt clean dist
 
+# copy file 
+sudo cp /home/master1/.sbt/1.0/staging/9fe122a9540185ff93da/cmak/target/universal/cmak-3.0.0.7.zip .
+
+
 # unzip
-cd /opt/CMAK/target/universal
 sudo unzip cmak-3.0.0.7.zip
 
-# config
-cd cmak-3.0.0.7/
-cd conf
-sudo vim application.conf
 
+# go to cmak file
+cd cmak-3.0.0.7/
 sudo bin/cmak -Dconfig.file=/root/CMAK/conf/application.conf -Dhttp.port=9000
 
 ```
@@ -290,11 +308,11 @@ Topic create and delete
 ``` bash
 # create: cd /opt/kafka_2.13-3.4.1/bin
 ./kafka-topics.sh --create --topic test-topic --bootstrap-server localhost:9092 --replication-factor 1 --partitions 4
-./kafka-topics.sh --create --topic test-topic-1 --bootstrap-server 192.168.1.25:9092 --replication-factor 1 --partitions 4
+./kafka-topics.sh --create --topic test-topic-1 --bootstrap-server 192.168.1.40:9092 --replication-factor 1 --partitions 4
 
 # describe
 ./kafka-topics.sh --describe --topic test-topic  zookeeper localhost:2181
-./kafka-topics.sh --describe --topic test-topic-1 --bootstrap-server 192.168.1.25:9092 zookeeper 192.168.1.25:2181
+./kafka-topics.sh --describe --topic test-topic-1 --bootstrap-server 192.168.1.40:9092 zookeeper 192.168.1.40:2181
 
 
 
