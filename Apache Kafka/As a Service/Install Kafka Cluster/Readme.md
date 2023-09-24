@@ -301,7 +301,8 @@ sudo unzip cmak-3.0.0.7.zip
 # go to cmak file
 cd cmak-3.0.0.7/
 sudo bin/cmak -Dconfig.file=/root/CMAK/conf/application.conf -Dhttp.port=9000
-
+or
+sudo bin/cmak -Dconfig.file=/opt/CMAK/conf/application.conf -Dhttp.port=9000
 ```
 
 Topic create and delete
