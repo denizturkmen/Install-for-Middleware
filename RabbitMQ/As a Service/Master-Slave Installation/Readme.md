@@ -34,7 +34,7 @@ Now let's install **erlang** on the master and slave
 # install trasnport 
 sudo apt install software-properties-common apt-transport-https -y
 
-# dowland erlang into /etc/apt/source.list
+# dowland erlang 
 wget -O- https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc | sudo apt-key add -
 
 # Adding erlang into /etc/apt/source.list
