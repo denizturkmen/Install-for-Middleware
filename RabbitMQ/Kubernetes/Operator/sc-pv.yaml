@@ -1,0 +1,87 @@
+##################################################
+# RabbitMQ StorageClass
+##################################################
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: local-storage
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+---
+##################################################
+# RabbitMQ Persistent Volume
+##################################################
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: rabbitmq-pv1
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: local-storage
+  hostPath:
+    path: "/mnt/k8s/rabbitmq"
+    type: Directory
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - k8s-master-1
+---
+##################################################
+# RabbitMQ Persistent Volume
+##################################################
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: rabbitmq-pv2
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: local-storage
+  hostPath:
+    path: "/mnt/k8s/rabbitmq"
+    type: Directory
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - k8s-master-1
+---
+##################################################
+# RabbitMQ Persistent Volume
+##################################################
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: rabbitmq-pv3
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: local-storage
+  hostPath:
+    path: "/mnt/k8s/rabbitmq"
+    type: Directory
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - k8s-master-1

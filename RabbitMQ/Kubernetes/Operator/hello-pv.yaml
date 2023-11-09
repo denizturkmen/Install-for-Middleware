@@ -1,0 +1,25 @@
+##################################################
+# RabbitMQ Persistent Volume
+##################################################
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: hello-world
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: local-storage
+  hostPath:
+    path: "/mnt/k8s/rabbitmq"
+    type: Directory
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - k8s-master-1

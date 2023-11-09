@@ -1,0 +1,31 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  namespace: rabbitmq-system
+  name: rabbitmq-prod
+spec:
+  replicas: 3
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 1
+      memory: 2Gi
+  rabbitmq:
+    additionalConfig: |
+      log.console.level = info
+      default_user= deniz 
+      default_pass = turkmen
+      default_user_tags.administrator = true
+  persistence:
+    storageClassName: local-storage
+    storage: 5Gi
+  service:
+    type: LoadBalancer
+  override:
+    service:
+      spec:
+        ports:
+        - port: 5672
+          targetPort: 5672
