@@ -12,7 +12,7 @@ spec:
   hostPath:
     path: "/home/deniz/volume/zookeeper"
   capacity:
-    storage: 5Gi
+    storage: 20Gi
   accessModes:
     - ReadWriteOnce
   nodeAffinity:
@@ -30,14 +30,14 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: zookeeper-pv-claim-0
+  name: data-kafka-release-zookeeper-0
   namespace: kafkacluster
   labels:
     app: zookeeper
 spec:
   resources:
     requests:
-      storage: 5Gi
+      storage: 20Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce

@@ -80,7 +80,7 @@ diagnosticMode:
 image:
   registry: docker.io
   repository: bitnami/kafka
-  tag: 3.5.1-debian-11-r44
+  tag: 3.5.1-debian-11-r61
   digest: ""
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
@@ -330,7 +330,7 @@ tls:
   zookeeper:
     ## @param tls.zookeeper.enabled Enable TLS for Zookeeper client connections.
     ##
-    enabled: false
+    enabled: true
     ## @param tls.zookeeper.verifyHostname Hostname validation.
     ##
     verifyHostname: true
@@ -421,7 +421,7 @@ controller:
   ## @param controller.replicaCount Number of Kafka controller-eligible nodes
   ## Ignore this section if running in Zookeeper mode.
   ##
-  replicaCount: 3
+  replicaCount: 1
   ## @param controller.controllerOnly If set to true, controller nodes will be deployed as dedicated controllers, instead of controller+broker processes.
   ##
   controllerOnly: false
@@ -470,7 +470,8 @@ controller:
   ##   - name: KAFKA_CFG_BACKGROUND_THREADS
   ##     value: "10"
   ##
-  extraEnvVars: []
+  extraEnvVars: 
+    KAFKA_ENABLE_KRAFT: false
   ## @param controller.extraEnvVarsCM ConfigMap with extra environment variables
   ##
   extraEnvVarsCM: ""
@@ -1282,7 +1283,7 @@ externalAccess:
     image:
       registry: docker.io
       repository: bitnami/kubectl
-      tag: 1.25.13-debian-11-r11
+      tag: 1.28.2-debian-11-r2
       digest: ""
       ## Specify a imagePullPolicy
       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
@@ -1532,7 +1533,7 @@ volumePermissions:
   image:
     registry: docker.io
     repository: bitnami/os-shell
-    tag: 11-debian-11-r60
+    tag: 11-debian-11-r77
     digest: ""
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
@@ -1614,7 +1615,7 @@ metrics:
     image:
       registry: docker.io
       repository: bitnami/kafka-exporter
-      tag: 1.7.0-debian-11-r102
+      tag: 1.7.0-debian-11-r120
       digest: ""
       ## Specify a imagePullPolicy
       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
@@ -1868,7 +1869,7 @@ metrics:
     image:
       registry: docker.io
       repository: bitnami/jmx-exporter
-      tag: 0.19.0-debian-11-r66
+      tag: 0.19.0-debian-11-r84
       digest: ""
       ## Specify a imagePullPolicy
       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
@@ -2284,7 +2285,9 @@ provisioning:
 kraft:
   ## @param kraft.enabled Switch to enable or disable the KRaft mode for Kafka
   ##
-  enabled: true
+  enabled: false
+  ## @param kraft.existingClusterIdSecret Name of the secret containing the cluster ID for the Kafka KRaft cluster. This is incompatible with the clusterId parameter. If both are set, the existingClusterIdSecret will be used
+  existingClusterIdSecret: ""
   ## @param kraft.clusterId Kafka Kraft cluster ID. If not set, a random cluster ID will be generated the first time Kraft is initialized.
   ## NOTE: Already initialized Kafka nodes will use cluster ID stored in their persisted storage.
   ## If reusing existing PVCs or migrating from Zookeeper mode, make sure the cluster ID is set matching the stored cluster ID, otherwise new nodes will fail to join the cluster.
@@ -2307,7 +2310,7 @@ zookeeperChrootPath: ""
 zookeeper:
   ## @param zookeeper.enabled Switch to enable or disable the ZooKeeper helm chart. Must be false if you use KRaft mode.
   ##
-  enabled: false
+  enabled: true
   ## @param zookeeper.replicaCount Number of ZooKeeper nodes
   ##
   replicaCount: 1

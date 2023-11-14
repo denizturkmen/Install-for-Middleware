@@ -80,8 +80,8 @@ helm repo list
 helm repo update
 
 # install
-helm install prod-zookeeper oci://registry-1.docker.io/bitnamicharts/zookeeper -n kafkacluster -f zookeeper-values.yaml \
---set replicaCount=3 \
+helm install prod-zookeeper oci://registry-1.docker.io/bitnamicharts/zookeeper -n kafkacluster -f zookeeper-values.yaml --version 18.0.0 \
+--set replicaCount=1 \
 --set auth.enabled=false \
 --set service.type=NodePort,service.clusterIP="" \
 --set nodeSelector."beta\\.kubernetes\\.io/os"=linux \
@@ -138,8 +138,8 @@ Installing to kafka
 # install
 helm install prod-kafka oci://registry-1.docker.io/bitnamicharts/kafka -n kafkacluster -f kafka-values.yaml \
 --set zookeeper.enabled=false \
---set replicaCount=3 \
---set externalZookeeper.servers="prod-zookeeper.kafkacluster.svc.cluster.local" \
+--set controller.replicaCount=3 \
+--set externalZookeeper.servers="prod-zookeeper.default.svc.cluster.local" \
 --set service.type=NodePort,service.clusterIP="" \
 --set nodeSelector."beta\\.kubernetes\\.io/os"=linux \
 --set persistence.existingClaim="kafka-pv-claim-0"
@@ -158,3 +158,6 @@ deploy bitnami: https://docs.bitnami.com/tutorials/deploy-scalable-kafka-zookeep
 
 
 ```
+
+
+helm install kafka-release bitnami/kafka --set persistence.size=8Gi,logPersistence.size=8Gi,replicaCount=3,volumePermissions.enabled=true,persistence.enabled=true,logPersistence.enabled=true,auth.clientProtocol=plaintext,allowPlaintextListener=true,listeners=PLAINTEXT://0.0.0.0:9092,advertisedListeners=PLAINTEXT://:9092,listenerSecurityProtocolMap=PLAINTEXT:PLAINTEXT,interBrokerListenerName="PLAINTEXT",serviceAccount.create=true,rbac.create=true
