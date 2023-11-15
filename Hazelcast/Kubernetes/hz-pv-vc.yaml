@@ -1,0 +1,44 @@
+##################################################
+# HAZELCAST Persistent Volume
+##################################################
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mancenter-storage-prod-hazelcast-pv-volume
+  labels:
+    type: local
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 8Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data/hazelcast"
+---
+##################################################
+# HAZELCAST Persistent Volume Claims
+##################################################
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  finalizers:
+  - kubernetes.io/pvc-protection
+  labels:
+    app.kubernetes.io/instance: hazelcast
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: hazelcast-mancenter
+    helm.sh/chart: hazelcast-3.7.0
+    role: mancenter
+  name: mancenter-storage-prod-hazelcast-mancenter-0
+  namespace: hazelcast
+spec:
+  storageClassName: local-storage
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 8Gi
+  volumeMode: Filesystem
+  volumeName: mancenter-storage-prod-hazelcast-pv-volume
+---
