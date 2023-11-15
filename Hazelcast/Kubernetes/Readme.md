@@ -64,7 +64,7 @@ helm repo list
 helm install prod-hazelcast hazelcast/hazelcast \
 -n hazelcast \
 -f values.yml \
---set service.type=NodePort,service.clusterIP="" \
+--set service.type=LoadBalancer,service.clusterIP="" \
 --set mancenter.persistence.storageClass=local-storage \
 --set persistence.existingClaim=mancenter-storage-prod-hazelcast-mancenter-0
 
@@ -72,7 +72,6 @@ helm install prod-hazelcast hazelcast/hazelcast \
 
 # Referance
 ``` bash
-
-
+github: https://github.com/helm/charts/tree/master/stable/hazelcast
 
 ```
