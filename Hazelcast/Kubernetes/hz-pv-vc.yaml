@@ -4,7 +4,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mancenter-storage-gkg-hazelcast-pv-volume
+  name: mancenter-storage-prod-hazelcast-pv-volume
   labels:
     type: local
 spec:
@@ -30,7 +30,7 @@ metadata:
     app.kubernetes.io/name: hazelcast-mancenter
     helm.sh/chart: hazelcast-3.7.0
     role: mancenter
-  name: mancenter-storage-gkg-hazelcast-mancenter-0
+  name: mancenter-storage-prod-hazelcast-mancenter-0
   namespace: hazelcast
 spec:
   storageClassName: local-storage
@@ -40,7 +40,7 @@ spec:
     requests:
       storage: 8Gi
   volumeMode: Filesystem
-  volumeName: mancenter-storage-gkg-hazelcast-pv-volume
+  volumeName: mancenter-storage-prod-hazelcast-pv-volume
 ---
 
 
