@@ -16,7 +16,12 @@ gpg --no-default-keyring --keyring /usr/share/keyrings/hashicorp-archive-keyring
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
 
 # Install
-sudo apt update && sudo apt install vault
+sudo apt update 
+sudo apt install vault
+
+# specific version
+sudo apt list -a vault
+sudo apt install vault=1.16.2-1
 
 # check
 vault -h
@@ -27,6 +32,9 @@ Hashicorp vault UI install and configure
 ``` bash
 # go to directory
 cd /etc/vault.d
+
+# opening config
+vim vault.hcl
 
 # opening .hcl config
  ui = true
@@ -54,6 +62,8 @@ listener "tcp" {
 
 # Create the vault/data directory for the storage backend.
 mkdir -p /opt/vault/data
+sudo chown -R vault:vault  /opt/vault/data
+sudo chmod -R 770 /opt/vault/data
 
 # config check command
 vault server -config=vault.hcl

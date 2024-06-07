@@ -13,17 +13,17 @@ storage "file" {
 }
 
 #storage "consul" {
-#  address = "192.168.1.6:8500"
+#  address = "192.168.1.7:8500"
 #  path    = "vault"
 #}
 
 # api_addr -> dns name
-api_addr = "http://192.168.1.6:8200" 
-cluster_addr = "https://192.168.1.6:8201"
+api_addr = "http://192.168.1.7:8200" 
+cluster_addr = "https://192.168.1.7:8201"
 
 # HTTP listener
 listener "tcp" {
-  address = "192.168.1.6:8200"
+  address = "192.168.1.7:8200"
   tls_disable = 1
 }
 
