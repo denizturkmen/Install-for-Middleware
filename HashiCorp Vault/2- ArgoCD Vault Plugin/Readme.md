@@ -168,7 +168,49 @@ kubectl apply -f application.yaml
 
 
 
+Usage command
+``` bash
 
+# try command
+vault token create -policy=argocd-policy
+curl -vik -H "X-Vault-Token: hvs.nSEPyvxsZXcEZJyQIEeFQAgq" http://192.168.1.7:8200/v1/kv-v2/data/argocd
+vault read auth/approle/role/argocd-role/role-id
+
+vault write auth/approle/login \
+    role_id=ff720467-1503-1365-8dec-5180099e8a14 \
+    secret_id=2c9d5263-e01e-ed13-0532-5d179850c57b
+
+---
+curl \
+    --request POST \
+    --data '{"role_id":"ff720467-1503-1365-8dec-5180099e8a14","secret_id":"2c9d5263-e01e-ed13-0532-5d179850c57b"}' \
+    http://192.168.1.7:8200/v1/auth/approle/login
+
+---
+vault auth enable approle
+
+
+vault write auth/approle/role/my-role \
+    token_type=batch \
+    secret_id_ttl=10m \
+    token_num_uses=10 \
+    token_ttl=20m \
+    token_max_ttl=30m \
+    secret_id_num_uses=40
+
+vault read auth/approle/role/my-role/role-id
+
+vault write -f auth/approle/role/my-role/secret-id
+
+curl \
+    --header "X-Vault-Token: ..." \
+    --request POST \
+    --data '{"type": "approle"}' \
+    http://127.0.0.1:8200/v1/sys/auth/approle
+
+
+
+```
 
 
 
