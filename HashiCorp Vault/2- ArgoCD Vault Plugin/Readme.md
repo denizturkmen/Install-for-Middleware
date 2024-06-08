@@ -48,7 +48,7 @@ vault auth enable approle
 
 # Create a Vault policy on the vault machine
 vault policy write argocd-policy - <<EOF
-path "secret/data/*" {
+path "kv-v2/data/argocd/*" {
   capabilities = ["read"]
 }
 EOF
@@ -66,6 +66,10 @@ SECRET_ID=$(vault write -f -field=secret_id auth/approle/role/argocd-role/secret
 # show role_id and secret_id
 echo $ROLE_ID
 echo $SECRET_ID
+
+# token 
+vault write auth/approle/login role_id="$ROLE_ID" secret_id="$SECRET_ID"
+
 
 ```
 
