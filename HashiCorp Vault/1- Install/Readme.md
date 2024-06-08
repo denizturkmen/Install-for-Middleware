@@ -105,7 +105,7 @@ vault operator unseal <unseal_key_3>
 
 # Login to Vault
 vault login <root_token>
-
+vault login root 
 
 
 ```

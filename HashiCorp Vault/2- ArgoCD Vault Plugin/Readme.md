@@ -22,9 +22,28 @@ helm version --short
 
 ```
 
-Enable and Configure AppRole Authentication in Vault. Try!!!
+Vault authorize via token
 ``` bash
-# Enable the AppRole authentication method:
+# create ns
+kubectl create ns argocd
+
+# creating secret: secret.yaml
+  VAULT_ADDR: Your HashiCorp Vault Address
+  VAULT_TOKEN: Your Vault token
+  AVP_TYPE: vault
+  AVP_AUTH_TYPE: token
+
+# apply secret
+kubectl apply -f secret.yaml
+
+```
+
+Enable and Configure AppRole Authentication in Vault. Vault authorize via approle
+``` bash
+# create ns
+kubectl create ns argocd
+
+# Enable the AppRole Authentication Method
 vault auth enable approle
 
 # Create a Vault policy on the vault machine
@@ -33,7 +52,6 @@ path "secret/data/*" {
   capabilities = ["read"]
 }
 EOF
-
 
 # Create a role with the appropriate policies:
 vault write auth/approle/role/argocd-role \
@@ -45,10 +63,84 @@ vault write auth/approle/role/argocd-role \
 ROLE_ID=$(vault read -field=role_id auth/approle/role/argocd-role/role-id)
 SECRET_ID=$(vault write -f -field=secret_id auth/approle/role/argocd-role/secret-id)
 
+# show role_id and secret_id
+echo $ROLE_ID
+echo $SECRET_ID
+
+```
+
+Vault authorize via appRole
+``` bash
+# template
+apiVersion: v1
+kind: Secret
+metadata:
+  name: vault-configuration
+  namespace: argocd
+type: Opaque
+stringData:
+  VAULT_ADDR: Your HashiCorp Vault Address
+  AVP_TYPE: vault
+  AVP_AUTH_TYPE: approle
+  AVP_ROLE_ID: Your AppRole Role ID
+  AVP_SECRET_ID: Your AppRole Secret ID
+
+# apply
+kubectl apply -f secret-approle.yaml
+
+# check
+kubectl get secret -n argocd
+
+
+```
+
+Configmap create for arrgocd vault plugin. Configuring argo vault plugin, helm and kustomize.
+``` bash
+# creating file cmp-plugin.yaml and apply configMap
+vim cmp-plugin.yaml
+kubectl apply -f cmp-plugin.yaml
+
+# check
+kubectl get cm -n argocd
+
+```
+
+Install and configure argocd via helm
+``` bash
+# opening values.yaml for helm 
+vim values.yaml
+
+# Now we can install argocd with these values.yaml using
+helm repo add argo https://argoproj.github.io/argo-helm
+helm repo update
+helm install argocd argo/argo-cd -n argocd -f values.yaml
+
+# check
+kubectl get pods,svc -n argocd
+
+# patch to nodePort
+kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "NodePort"}}'
+
+# show admin password
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64  -d && echo ""
+
+# logging init container
+kubectl logs -f -n namespace pod_name -c init_container_name
+kubectl logs -n argocd argocd-repo-server-67c5b98b4b-g57l4 -c avp
+kubectl logs -n argocd argocd-repo-server-67c5b98b4b-g57l4 -c avp-helm
+kubectl logs -n argocd argocd-repo-server-67c5b98b4b-g57l4 -c avp-kustomize
+
 
 ```
 
 
+Example: Creating Secret in Vault and Deploying Application
+``` bash
+
+
+
+
+```
 
 
 
