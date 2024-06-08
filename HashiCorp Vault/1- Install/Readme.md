@@ -47,23 +47,23 @@ storage "file" {
 }
 
 #storage "consul" {
-#  address = "192.168.1.6:8500"
+#  address = "192.168.1.7:8500"
 #  path    = "vault"
 #}
 
-api_addr = "http://192.168.1.6:8200"
-cluster_addr = "https://192.168.1.6:8201"
+api_addr = "http://192.168.1.7:8200"
+cluster_addr = "https://192.168.1.7:8201"
 
 # HTTP listener
 listener "tcp" {
-  address = "192.168.1.6:8200"
+  address = "192.168.1.7:8200"
   tls_disable = 1
 }
 
 # Create the vault/data directory for the storage backend.
 mkdir -p /opt/vault/data
 sudo chown -R vault:vault  /opt/vault/data
-sudo chmod -R 770 /opt/vault/data
+sudo chmod -R 777 /opt/vault/data
 
 # config check command
 vault server -config=vault.hcl
@@ -86,7 +86,7 @@ sudo systemctl status vault.service
 Hashicorp vault configure via cli
 ``` bash
 # initiliaze vault
-export VAULT_ADDR='http://192.168.1.6:8200'
+export VAULT_ADDR='http://192.168.1.7:8200'
 vault operator init
 
 # troubleshooting: go to directory
@@ -94,7 +94,7 @@ cd /etc/vault.d
 vim vault.hcl
     # HTTP listener
     listener "tcp" {
-    address = "192.168.1.6:8200"
+    address = "192.168.1.7:8200"
     tls_disable = 1
     }
 
@@ -108,18 +108,30 @@ vault login <root_token>
 
 
 
-
-
 ```
 
-Hashicorp vault starting
+Creating policy and permission on hashicorp vault
 ``` bash
+# Create a Policy File (my-policy.hcl): opening .hcl via vim
+path "secret/data/*" {
+  capabilities = ["create", "read", "update", "delete", "list"]
+}
 
+# Write the Policy to Vault
+vault policy write my-policy my-policy.hcl
+vault policy write test-policy test-policy.hcl
+
+# Enable Userpass Authentication:
+vault auth enable userpass
+
+#Create a User with the Policy:
+vault write auth/userpass/users/denizturkmen password=q1w2e3r4 policies=my-policy
+
+# Login as the User:
+vault login -method=userpass username=denizturkmen password=q1w2e3r4
 
 
 ```
-
-
 
 
 
