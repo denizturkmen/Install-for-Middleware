@@ -36,3 +36,12 @@ vault kv put secret/mysecret value="my secret value"
 vault kv get secret/mysecret
 
 ```
+
+
+Enable the ```Approle``` Authentication Method
+``` bash
+
+
+
+
+```
