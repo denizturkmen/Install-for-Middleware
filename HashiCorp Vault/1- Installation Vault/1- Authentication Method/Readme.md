@@ -66,6 +66,7 @@ echo $SECRET_ID
 
 # token - login
 vault write auth/approle/login role_id="$ROLE_ID" secret_id="$SECRET_ID"
+vault login token
 
 # check
 vault kv get secret/mysecret
