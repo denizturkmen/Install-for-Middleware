@@ -130,8 +130,15 @@ vault write auth/userpass/users/denizturkmen password=q1w2e3r4 policies=my-polic
 # Login as the User:
 vault login -method=userpass username=denizturkmen password=q1w2e3r4
 
+```
+
+Useful commmand
+``` bash
+# 
+
 
 ```
+
 
 
 

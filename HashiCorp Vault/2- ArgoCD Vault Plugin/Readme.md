@@ -48,7 +48,7 @@ vault auth enable approle
 
 # Create a Vault policy on the vault machine
 vault policy write argocd-policy - <<EOF
-path "kv-v2/data/argocd/*" {
+path "kv-v2/*" {
   capabilities = ["read"]
 }
 EOF
@@ -177,14 +177,16 @@ curl -vik -H "X-Vault-Token: hvs.nSEPyvxsZXcEZJyQIEeFQAgq" http://192.168.1.7:82
 vault read auth/approle/role/argocd-role/role-id
 
 vault write auth/approle/login \
-    role_id=ff720467-1503-1365-8dec-5180099e8a14 \
-    secret_id=2c9d5263-e01e-ed13-0532-5d179850c57b
+    role_id=840ae168-8ce7-2ce2-f76e-8e39805d23a1 \
+    secret_id=64bd49dd-918f-725e-10ac-a9bb64a5c605
 
 ---
 curl \
     --request POST \
-    --data '{"role_id":"ff720467-1503-1365-8dec-5180099e8a14","secret_id":"2c9d5263-e01e-ed13-0532-5d179850c57b"}' \
+    --data '{"role_id":"840ae168-8ce7-2ce2-f76e-8e39805d23a1","secret_id":"64bd49dd-918f-725e-10ac-a9bb64a5c605"}' \
     http://192.168.1.7:8200/v1/auth/approle/login
+
+    
 
 ---
 vault auth enable approle
