@@ -29,11 +29,10 @@ vault login -method=userpass username=example-user password=example-password
 vault token
 hvs.CAESIA_3Il8BOm2sCq7CEqViReOoLo6HXKZvzmUfUag8ANY8Gh4KHGh2cy41ZE1rSjc5emlOYjhEWlJ0MTRHVmV2MHg
 
-# Verify the User’s Access; Write a secret
+# Verify the User’s Access. Write a secret
 vault kv put secret/mysecret value="my secret value"
 
 # Read the secret
 vault kv get secret/mysecret
-
 
 ```
