@@ -67,7 +67,7 @@ SECRET_ID=$(vault write -f -field=secret_id auth/approle/role/argocd-role/secret
 echo $ROLE_ID
 echo $SECRET_ID
 
-# token 
+# token - login
 vault write auth/approle/login role_id="$ROLE_ID" secret_id="$SECRET_ID"
 
 
