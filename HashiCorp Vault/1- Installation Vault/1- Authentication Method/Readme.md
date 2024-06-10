@@ -40,7 +40,46 @@ vault kv get secret/mysecret
 
 Enable the ```Approle``` Authentication Method
 ``` bash
+# Enable the AppRole Authentication Method
+vault auth enable approle
 
+# Create a Vault policy on the vault machine
+vault policy write approle-policy - <<EOF
+path "secret/*" {
+  capabilities = ["read"]
+}
+EOF
+
+# Create a role with the appropriate policies:
+vault write auth/approle/role/approle-role \
+  token_policies="approle-policy" \
+  token_ttl=1h \
+  token_max_ttl=4h
+
+# Retrieve the role ID and secret ID for the AppRole:
+ROLE_ID=$(vault read -field=role_id auth/approle/role/approle-role/role-id)
+SECRET_ID=$(vault write -f -field=secret_id auth/approle/role/approle-role/secret-id)
+
+# show role_id and secret_id
+echo $ROLE_ID
+echo $SECRET_ID
+
+# token - login
+vault write auth/approle/login role_id="$ROLE_ID" secret_id="$SECRET_ID"
+
+# check
+vault kv get secret/mysecret
+==== Data ====
+Key      Value
+---      -----
+value    my secret value
+
+
+vault kv get secret/myapp
+==== Data ====
+Key      Value
+---      -----
+deniz    turkmen
 
 
 
