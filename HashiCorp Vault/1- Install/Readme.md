@@ -134,7 +134,7 @@ vault login -method=userpass username=denizturkmen password=q1w2e3r4
 
 Useful commmand
 ``` bash
-# 
+# secret engine enable
 
 
 ```
