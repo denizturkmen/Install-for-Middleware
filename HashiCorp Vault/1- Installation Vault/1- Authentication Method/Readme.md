@@ -1,7 +1,7 @@
 # How to Create Policy & Role
 
 
-Enable the ```Userpass``` Authentication Method
+## Enable the ```Userpass``` Authentication Method
 ``` bash
 # Log in to Vault: Make sure you are logged into Vault with sufficient privileges.
 vault login <your-token>
@@ -38,7 +38,7 @@ vault kv get secret/mysecret
 ```
 
 
-Enable the ```Approle``` Authentication Method
+## Enable the ```Approle``` Authentication Method
 ``` bash
 # Enable the AppRole Authentication Method
 vault auth enable approle
