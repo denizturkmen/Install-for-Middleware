@@ -20,6 +20,16 @@ secretGenerator:
     envs:
       - secret-env-file.env
 
+configMapGenerator:
+- name: nginx-index
+  files:
+  - index.html=index.html
+
+# configMapGenerator:
+# - name: nginx-index
+#   files:
+# files/index.html
+
 # This setup ensures that the secrets are generated correctly from the specified files and environment variables. 
 # The disableNameSuffixHash option is used to prevent Kustomize from adding a hash suffix to the secret name, 
 # which is useful if you need a predictable name for the secret.

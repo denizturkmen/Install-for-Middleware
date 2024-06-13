@@ -4,5 +4,6 @@ kind: Kustomization
 metadata:
   name: devops-deniz
 resources:
+- namespace.yaml
 - deployment.yaml
 - service.yaml
