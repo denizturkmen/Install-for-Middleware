@@ -42,3 +42,11 @@ kubectl get pods -n default
 
 ```
 
+
+# Referance
+``` bash
+# configmapGenerator: https://devopscube.com/kuztomize-configmap-generators/
+
+
+
+```
