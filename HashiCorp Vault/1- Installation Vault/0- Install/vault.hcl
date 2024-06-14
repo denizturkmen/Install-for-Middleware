@@ -8,7 +8,7 @@ ui = true
 #mlock = true
 #disable_mlock = true
 
-storage "file" {
+storage "raft" {
   path = "/opt/vault/data"
 }
 
