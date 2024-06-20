@@ -1,7 +1,7 @@
 # Installation and Congifuration HashiCorp Vault as a Service
 
 
-Hashicorp vault cli install
+Hashicorp vault cli install on ubuntu/debian
 ``` bash
 # Update the package manager and install GPG and wget
 sudo apt update && sudo apt install gpg wget
@@ -24,6 +24,34 @@ sudo apt list -a vault
 sudo apt install vault=1.16.2-1
 
 # check
+vault -h
+
+```
+
+
+Hashicorp vault cli install on RedHat 9
+``` bash
+# Update your system:
+sudo dnf update -y
+
+# Install necessary dependencies: Install yum-utils to manage repository configurations.
+sudo dnf install -y yum-utils
+
+# Add the HashiCorp Linux repository: Create a new repository configuration file for HashiCorp Vault.
+sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+
+# Install Vault: With the repository added, you can now install Vault.
+sudo dnf install -y vault
+
+# specific version
+sudo dnf list installed vault
+sudo dnf list vault --showduplicates
+sudo yum --showduplicates list vault | expand
+
+sudo dnf install -y vault=1.16.2-1.arch
+
+# check
+vault --version
 vault -h
 
 ```
