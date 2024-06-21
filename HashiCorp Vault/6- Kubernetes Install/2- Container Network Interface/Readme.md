@@ -17,7 +17,7 @@
 ```
 
 
-### Install Cilius
+### Install Cilium
 ``` bash
 
 
