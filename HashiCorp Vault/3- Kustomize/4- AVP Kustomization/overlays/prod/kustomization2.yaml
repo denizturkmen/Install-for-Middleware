@@ -1,0 +1,51 @@
+kind: Kustomization
+  
+resources:
+- ../../base
+
+namespace: dev
+namePrefix: dev-
+# nameSuffix: "-001"
+
+
+images:
+  - name: nginx
+    newName: nginx
+    newTag: latest
+
+secretGenerator:
+  - name: my-secret
+    envs:
+      - secret-env-file.env
+    type: Opaque
+
+generatorOptions:
+ annotations:
+   avp.kubernetes.io/path: "kv-v2/data/argocd"
+---
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../../base
+
+namespace: dev
+namePrefix: dev-
+# nameSuffix: "-001"
+
+commonAnnotations:
+  avp.kubernetes.io/path: "kv-v2/data/argocd"
+
+images:
+  - name: nginx
+    newName: nginx
+    newTag: latest
+
+secretGenerator:
+  - name: my-secret
+    envs:
+      - secret-env-file.env
+
+generatorOptions:
+  disableNameSuffixHash: true

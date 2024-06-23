@@ -23,3 +23,11 @@
 
 
 ```
+
+
+### Referance
+``` bash
+calico: https://docs.tigera.io/calico/latest/getting-started/kubernetes/quickstart
+on-prem calico: https://docs.tigera.io/calico/latest/getting-started/kubernetes/self-managed-onprem/onpremises
+
+```
