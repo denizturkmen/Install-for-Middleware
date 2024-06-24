@@ -1,9 +1,0 @@
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: my-test-k8s-cm
-data:
-  myvalue: "Hello World"
-  drink: tea
----
