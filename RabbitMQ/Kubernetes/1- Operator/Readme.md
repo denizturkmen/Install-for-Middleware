@@ -25,8 +25,8 @@ kubectl get pv
 # install the RabbitMQ operator 
 kubectl apply -f https://github.com/rabbitmq/cluster-operator/releases/latest/download/cluster-operator.yml
 
-# check if the components are healthy in the rabbitmq-system namespace
-kubectl get all -o wide -n rabbitmq-system
+# check if the components are healthy in the rabbit namespace
+kubectl get all -o wide -n rabbit
 
 ```
 
@@ -43,32 +43,32 @@ kubectl apply -f rabbit-cluster.yaml
 kubectl apply -f rabbit-operator-advance.yaml
 
 # check
-kubectl get pods -n rabbitmq-system
+kubectl get pods -n rabbit
 
 # checking all rabbitmq-cluster
-kubectl get all -l app.kubernetes.io/part-of=rabbitmq -n rabbitmq-system 
+kubectl get all -l app.kubernetes.io/part-of=rabbitmq -n rabbit 
 
 # describe
-kubectl describe RabbitmqCluster -n rabbitmq-system rabbitmq-prod
+kubectl describe RabbitmqCluster -n rabbit rabbitmq-prod
 
 # username
-kubectl get secrets -n rabbitmq-system rabbitmq-prod-default-user -o jsonpath='{.data.username}' | base64 --decode
+kubectl get secrets -n rabbit rabbitmq-prod-default-user -o jsonpath='{.data.username}' | base64 --decode
 
 # password
-kubectl get secrets -n rabbitmq-system rabbitmq-prod-default-user -o jsonpath='{.data.password}' | base64 --decode
+kubectl get secrets -n rabbit rabbitmq-prod-default-user -o jsonpath='{.data.password}' | base64 --decode
 
 
 # replication / cluster Management
-kubectl exec pod/rabbitmq-prod-server-0 -n rabbitmq-system -- /bin/sh -c "rabbitmqctl cluster_status --formatter json" | jq
+kubectl exec pod/rabbitmq-prod-server-0 -n rabbit -- /bin/sh -c "rabbitmqctl cluster_status --formatter json" | jq
 
 # let us now check the nodes in the cluster.
-kubectl exec pod/rabbitmq-prod-server-0 -n rabbitmq-system -- /bin/sh -c "rabbitmqctl cluster_status --formatter json" | jq -r .running_nodes
+kubectl exec pod/rabbitmq-prod-server-0 -n rabbit -- /bin/sh -c "rabbitmqctl cluster_status --formatter json" | jq -r .running_nodes
 
 # check loadbalancerIP
-kubectl get svc -n rabbitmq-system rabbitmq-prod -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
+kubectl get svc -n rabbit rabbitmq-prod -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
 
 # environment to pods
-kubectl exec -it rabbitmq-prod-server-0 -n rabbitmq-system -- bash
+kubectl exec -it rabbitmq-prod-server-0 -n rabbit -- bash
     -> hostname -f 
 
 ```
