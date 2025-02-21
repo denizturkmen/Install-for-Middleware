@@ -1,10 +1,13 @@
 apiVersion: rabbitmq.com/v1beta1
 kind: RabbitmqCluster
 metadata:
-  namespace: rabbitmq-system
-  name: rabbitmq-prod
+  name: dev-rabbitmqcluster
+  namespace: rabbit
 spec:
   replicas: 3
+  persistence:
+    storageClassName: azurefile-rt
+    storage: 5Gi
   resources:
     requests:
       cpu: 500m
@@ -24,18 +27,9 @@ spec:
       cluster_formation.node_cleanup.interval = 10
       cluster_partition_handling = autoheal
       queue_master_locator = min-masters
-      log.console.level = info
-      default_user= deniz 
-      default_pass = turkmen
-      default_user_tags.administrator = true
-  persistence:
-    storageClassName: local-storage
-    storage: 5Gi
+      loopback_users.guest = false
+      default_user = ******
+      default_pass = *******
+    advancedConfig: ""
   service:
-    type: LoadBalancer
-  override:
-    service:
-      spec:
-        ports:
-        - port: 5672
-          targetPort: 5672
+    type: ClusterIP

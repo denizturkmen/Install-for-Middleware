@@ -1,7 +1,7 @@
 # Rabbitmq cluster install and configure via Operator on On-Prem
 
 
-Storage class and persitent colume create
+## Storage class and persitent colume create
 ``` bash
 # create to directory
 sudo mkdir -p /mnt/k8s/rabbitmq
@@ -20,7 +20,7 @@ kubectl get pv
 ```
 
 
-Install rabbgitmq via operator
+## Install rabbgitmq via operator
 ``` bash
 # install the RabbitMQ operator 
 kubectl apply -f https://github.com/rabbitmq/cluster-operator/releases/latest/download/cluster-operator.yml
@@ -31,10 +31,16 @@ kubectl get all -o wide -n rabbitmq-system
 ```
 
 
-RabbitMQ Cluster in our Kubernetes
+## RabbitMQ Cluster in our Kubernetes
 ``` bash
-# cluster
-kubectl apply -f rabbitmqcluster.yaml
+# namespace
+kubectl create ns rabbit
+
+# cluster 
+kubectl apply -f rabbit-cluster.yaml
+
+# cluster-advance
+kubectl apply -f rabbit-operator-advance.yaml
 
 # check
 kubectl get pods -n rabbitmq-system
@@ -67,20 +73,19 @@ kubectl exec -it rabbitmq-prod-server-0 -n rabbitmq-system -- bash
 
 ```
 
-Example
+## Creating Ingress 
 ``` bash
-# apply persitent volume
-kubectl apply -f hello-world.yaml
-
-# checking
-kubectl get pv
-
 # apply
-kubectl apply -f hello-world.yaml
+kubectl apply -f ingress.yaml
+
+# add hosts
+echo "ingress-address-ip> rabbitmq.example.com" | sudo tee -a /etc/hosts
+echo "192.168.1.200       rabbitmq.example.com" | sudo tee -a /etc/hosts
 
 
 
 ```
+
 
 
 # Referance
