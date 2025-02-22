@@ -91,6 +91,8 @@ echo "192.168.1.200       rabbitmq.example.com" | sudo tee -a /etc/hosts
 # Referance
 ``` bash
 github: https://github.com/rabbitmq/cluster-operator
+operator: https://github.com/rabbitmq/cluster-operator?tab=readme-ov-file
+https://github.com/rabbitmq/messaging-topology-operator
 
 
 ```
