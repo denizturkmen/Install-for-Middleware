@@ -26,7 +26,7 @@ kubectl get pv
 kubectl apply -f https://github.com/rabbitmq/cluster-operator/releases/latest/download/cluster-operator.yml
 
 # check if the components are healthy in the rabbit namespace
-kubectl get all -o wide -n rabbit
+kubectl get all -o wide -n rabbitmq-system
 
 ```
 
